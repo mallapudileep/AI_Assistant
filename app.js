@@ -7,18 +7,27 @@ document.addEventListener('DOMContentLoaded', () => {
     setTheme(savedTheme);
     renderHistory();
 
-    // Input handlers
     const input = document.getElementById('user-input');
+    
+    // Improved auto-resize
     input.addEventListener('input', () => {
         input.style.height = 'auto';
-        input.style.height = input.scrollHeight + 'px';
+        input.style.height = (input.scrollHeight > 150 ? 150 : input.scrollHeight) + 'px';
     });
 
     document.getElementById('send-btn').addEventListener('click', handleSendMessage);
+    
     input.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSendMessage();
+        }
+    });
+
+    // Fix for mobile keyboard pushing things
+    window.addEventListener('resize', () => {
+        if (document.activeElement.tagName === 'TEXTAREA') {
+            scrollToBottom();
         }
     });
 });
@@ -33,13 +42,8 @@ function toggleDropdown(id) {
     const dropdown = document.getElementById(id);
     const parent = dropdown.parentElement;
     const isExpanding = !parent.classList.contains('expanded');
-    
-    // Close others
     document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('expanded'));
-    
-    if (isExpanding) {
-        parent.classList.add('expanded');
-    }
+    if (isExpanding) parent.classList.add('expanded');
 }
 
 function setTheme(theme) {
@@ -52,10 +56,8 @@ async function handleSendMessage() {
     const text = input.value.trim();
     if (!text) return;
 
-    // Shift UI to Chat state
-    document.getElementById('chat-container').className = 'chat-container chat-state';
+    document.getElementById('chat-container').classList.replace('center-state', 'chat-state');
 
-    // New session logic
     if (!chats[currentChatId]) {
         chats[currentChatId] = { title: text.substring(0, 30), messages: [] };
     }
@@ -112,7 +114,8 @@ function appendMessage(msg) {
     }
 
     area.appendChild(div);
-    scrollToBottom();
+    // Timeout ensures message is rendered before scrolling
+    setTimeout(scrollToBottom, 50);
 }
 
 function scrollToBottom() {
@@ -135,7 +138,7 @@ function renderHistory() {
 function loadChat(id) {
     currentChatId = id;
     document.getElementById('messages-area').innerHTML = '';
-    document.getElementById('chat-container').className = 'chat-container chat-state';
+    document.getElementById('chat-container').classList.replace('center-state', 'chat-state');
     chats[id].messages.forEach(appendMessage);
     if(window.innerWidth < 768) toggleSidebar();
 }
@@ -143,7 +146,7 @@ function loadChat(id) {
 function createNewChat() {
     currentChatId = Date.now().toString();
     document.getElementById('messages-area').innerHTML = '';
-    document.getElementById('chat-container').className = 'chat-container center-state';
+    document.getElementById('chat-container').classList.replace('chat-state', 'center-state');
 }
 
 function saveAndRefresh() {
