@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistant AI</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="theme-light">
+
+    <!-- Sidebar Overlay for mobile -->
+    <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <span class="title">Assistant</span>
+            <button onclick="toggleSidebar()" class="close-btn">
+                <i data-lucide="chevron-left"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-menu">
+            <!-- History Section -->
+            <div class="menu-item">
+                <button class="menu-trigger" onclick="toggleDropdown('history-dropdown')">
+                    <div class="trigger-left"><i data-lucide="history"></i> Chat History</div>
+                    <i data-lucide="chevron-down" class="chevron"></i>
+                </button>
+                <div id="history-dropdown" class="dropdown-content">
+                    <div id="chat-history-list">
+                        <!-- History injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appearance Section -->
+            <div class="menu-item">
+                <button class="menu-trigger" onclick="toggleDropdown('theme-dropdown')">
+                    <div class="trigger-left"><i data-lucide="palette"></i> Appearance</div>
+                    <i data-lucide="chevron-down" class="chevron"></i>
+                </button>
+                <div id="theme-dropdown" class="dropdown-content">
+                    <div class="theme-option" onclick="setTheme('light')">Light Mode</div>
+                    <div class="theme-option" onclick="setTheme('dark')">Dark Mode</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="clear-history-btn" onclick="clearAllHistory()">
+                <i data-lucide="trash-2"></i> Clear All History
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <nav class="top-nav">
+            <button id="menu-toggle" onclick="toggleSidebar()" class="nav-icon-btn">
+                <i data-lucide="menu"></i>
+            </button>
+            <div class="nav-title">Assistant</div>
+            <button onclick="createNewChat()" class="new-chat-btn">
+                <i data-lucide="plus"></i> <span>New Chat</span>
+            </button>
+        </nav>
+
+        <section id="chat-container" class="chat-container center-state">
+            <!-- Landing View -->
+            <div id="welcome-screen" class="welcome-screen">
+                <h1 class="welcome-title">How can I help you?</h1>
+                <p class="subtitle">Start a chat or pick from history.</p>
+            </div>
+
+            <!-- Chat Message Area -->
+            <div id="messages-area" class="messages-area"></div>
+
+            <!-- Input Box -->
+            <div class="input-section">
+                <div class="input-form-box">
+                    <div class="input-row">
+                        <button class="attach-btn"><i data-lucide="plus"></i></button>
+                        <textarea id="user-input" placeholder="Message Assistant..." rows="1"></textarea>
+                        <button id="send-btn" class="send-btn">
+                            <i data-lucide="arrow-up"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="legal">AI responses can be inaccurate. Please verify facts.</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
