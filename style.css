@@ -98,7 +98,7 @@ body { background: var(--bg-main); color: var(--text-main); display: flex; heigh
 .subtitle { color: var(--text-muted); }
 
 /* Input Bar */
-.input-section { padding: 20px; }
+.input-section { padding: 20px; margin-top: -100px;}
 .input-form-box { background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border); padding: 10px 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 .input-row { display: flex; align-items: flex-end; gap: 10px; }
 textarea { flex: 1; background: none; border: none; outline: none; padding: 8px; resize: none; color: var(--text-main); font-size: 1rem; max-height: 150px; }
